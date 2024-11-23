@@ -13,6 +13,9 @@ credentials.json
 gsheet_id.json
 gsheet_test.json
 
+#logs
+logs/
+
 # Distribution / packaging
 .Python
 build/
