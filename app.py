@@ -1,6 +1,7 @@
 """ app.py """
 
 import os
+import math
 
 if os.path.exists("./logs/main_app.log"):
     os.remove("./logs/main_app.log")
@@ -30,12 +31,13 @@ def main():
     datasets = set_types(2023, 12, 31)
 
     if creds:
+        logging.info("🌐 Connected to Google API.")
         employees = []
 
         project_data = get_data(
             creds, os.getenv("PROJECT_SPREADSHEET"), os.getenv("PROJECT_RANGE")
         )
-        logging.info("Timesheet collection started...")
+        logging.info("📝 Timesheet collection started...")
 
         sheet_names = ["202411", "202412"]
 
@@ -66,7 +68,9 @@ def main():
                 )
 
                 excel_sheet += transformed_data
-                logging.info(f"[{sheet_name}]-[{employee.nickname}] ✅ OK.")
+                logging.info(
+                    f"[{sheet_name}]-[🪪 {'*' * (10-len(employee.nickname))} {employee.nickname} ] ✅ OK."
+                )
 
             export(excel_sheet, sheet_name)
 

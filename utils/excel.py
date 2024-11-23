@@ -40,4 +40,4 @@ def export(data, sheet_name, filename="data_extracted"):
         ws.append(row)
 
     wb.save(file_path)
-    logging.info(f"Filename: {filename}.xlsx Saved to {save_directory}.")
+    logging.info(f"💾 Filename: {filename}.xlsx Saved to {save_directory}.")
