@@ -20,13 +20,6 @@ from api_services.google_api import sheet_service
 # Load environment variables
 load_dotenv()
 
-# Configure logging
-logging.basicConfig(
-    filename="./logs/main_app.log",
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s",
-)
-
 
 def get_data(creds, spreadsheet_id, range_name):
     """

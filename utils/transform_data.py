@@ -3,9 +3,10 @@
 import datetime as dt
 from utils.clean_data import delete_columns
 from utils.get_week_types import get_name, set_types
+from utils.project_helper import get_client
 
 
-def transform_data(dataset, data_list, employee):
+def transform_data(dataset, data_list, employee, project):
     """
     Transforms raw data into a structured format suitable for further processing.
 
@@ -38,7 +39,7 @@ def transform_data(dataset, data_list, employee):
 
         # Clean project codes: Propagate project codes across relevant columns
         for i in range(3):
-            for j in [10, 14, 18, 22, 26]:
+            for j in [11, 15, 19, 23, 27]:
                 data[0][i + j] = data[0][j - 1]
 
         # Structure data: Extract and organize data into a lists of lists
@@ -47,17 +48,18 @@ def transform_data(dataset, data_list, employee):
                 year = int(data[row + 2][0])
                 month = int(data[row + 2][1])
                 day = int(data[row + 2][2])
-                employee_name = employee.nickname
-                employee_team = employee.team
-                week_type = get_name(dataset, year, month, day)
-                task_type = data[1][col + 3]
-                project_code = data[0][col + 3]
-                work_type = work_data[col + 3]
+                employee_name = str(employee.nickname)
+                employee_team = str(employee.team)
+                week_type = str(get_name(dataset, year, month, day))
+                task_type = str(data[1][col + 3])
+                project_code = str(data[0][col + 3])
+                work_type = str(work_data[col + 3])
                 worked_hours = round(float(data[row + 2][col + 3]), 2)
+                client = str(get_client(project_code, project))
 
                 transformed_data.append(
                     [
-                        "",
+                        client,
                         row + 1,
                         year,
                         month,

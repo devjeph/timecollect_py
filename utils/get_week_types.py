@@ -165,7 +165,7 @@ def set_dates(year, month, day):
 
         week_type = set_name(sunday, saturday)
 
-        if saturday.year >= year + 2:
+        if sunday.year >= year + 2:
             break
 
         sundays.append(sunday)
@@ -173,6 +173,7 @@ def set_dates(year, month, day):
         week_indices.append(week_index + 1)
         week_names.append(week_type)
 
+    week_names[-1] = "12to1"
     return [sundays, saturdays, week_indices, week_names]
 
 

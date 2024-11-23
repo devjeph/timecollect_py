@@ -12,13 +12,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Configure logging
-logging.basicConfig(
-    filename="./logs/main_app.log",
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s",
-)
-
 
 def sheet_service():
     """Connect to Google Sheets API"""
