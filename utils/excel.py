@@ -27,7 +27,7 @@ def export(data, sheet_name):
     ws.append(
         [
             "対応",
-            "列番号",
+            "行番号",
             "年",
             "月",
             "日",
