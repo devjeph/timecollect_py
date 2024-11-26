@@ -13,7 +13,7 @@ def export(data, sheet_name):
     save_directory = f"{os.getenv('OUTPUT_DIRECTORY')}"
     file_path = path.join(save_directory, "TimeCollect.xlsx")
 
-    os.makedirs(str(save_directory), exist_ok=True)
+    os.makedirs(save_directory, exist_ok=True)
 
     try:
         wb = load_workbook(file_path)
