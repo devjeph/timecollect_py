@@ -1,15 +1,19 @@
 import os
+from os import path
 import logging
 
 from openpyxl import Workbook, load_workbook
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
-def export(data, sheet_name, filename="data_extracted"):
+def export(data, sheet_name):
 
-    save_directory = "D:\\Documents\\TimeCollect"
-    file_path = os.path.join(save_directory, f"{filename}.xlsx")
+    save_directory = f"{os.getenv('OUTPUT_DIRECTORY')}"
+    file_path = path.join(save_directory, "TimeCollect.xlsx")
 
-    os.makedirs(save_directory, exist_ok=True)
+    os.makedirs(str(save_directory), exist_ok=True)
 
     try:
         wb = load_workbook(file_path)
@@ -40,4 +44,4 @@ def export(data, sheet_name, filename="data_extracted"):
         ws.append(row)
 
     wb.save(file_path)
-    logging.info(f"💾 Filename: {filename}.xlsx Saved to {save_directory}.")
+    logging.info(f"💾 Filename: TimeCollect.xlsx Saved to {save_directory}.")
