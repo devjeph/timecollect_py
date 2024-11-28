@@ -1,7 +1,6 @@
 """ app.py """
 
 import os
-import math
 
 if os.path.exists("./logs/main_app.log"):
     os.remove("./logs/main_app.log")
