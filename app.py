@@ -38,8 +38,8 @@ def main():
         )
         logging.info("📝 Timesheet collection started...")
 
-        sheet_names = ["202507", 
-                       "202508"
+        sheet_names = ["202508", 
+                       "202509"
                        ]
 
         for sheet_name in sheet_names:
