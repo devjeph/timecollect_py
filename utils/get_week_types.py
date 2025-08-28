@@ -1,4 +1,5 @@
-# get_week_types.py
+# utils/get_week_types.py
+
 import datetime as dt
 
 days_of_week = [

@@ -1,4 +1,4 @@
-# clean_data.py
+# utils/clean_data.py
 
 
 def delete_columns(data, column_indeces):

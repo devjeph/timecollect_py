@@ -1,3 +1,6 @@
+# models/employee.py
+
+
 class Employee:
     """
     Represents an employee with their ID, name, nickname, spreadsheet ID, and team.
