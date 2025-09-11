@@ -1,0 +1,24 @@
+#Environments
+
+.env
+.venv/
+
+#Python cache
+
+pycache/
+*.pyc
+
+#IDE
+
+.vscode/
+
+#Output files
+
+/output/
+/logs/
+*.log
+
+#Google Credentials
+
+/google_credentials/token.json
+/google_credentials/credentials.json
