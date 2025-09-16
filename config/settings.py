@@ -14,7 +14,7 @@ CREDENTIALS_DIR = os.path.join(BASE_DIR, 'google_credentials')
 LOG_FILE_PATH = os.path.join(LOGS_DIR, 'main_app.log')
 TOKEN_PATH = os.path.join(CREDENTIALS_DIR, 'token.json')
 CREDENTIALS_PATH = os.path.join(CREDENTIALS_DIR, 'credentials.json')
-EXCEL_OUTPUT_PATH = os.path.join('D:\Documents\TimeCollect\2025\TimeCollect_2.0.xlsx')
+EXCEL_OUTPUT_PATH = os.getenv("OUTPUT_DIRECTORY")
 
 # Google API
 SCOPES = [os.getenv("SCOPES")]
@@ -29,6 +29,12 @@ TIMESHEET_DATA_RANGE = "A7:BT39"
 COLUMNS_TO_DELETE = [
     3,4,5,6,7,8,9,10,11,12,21,26,31,36,41,46,51,56,61,66,71
 ]
+
+# Date settings
+# This MUST be a Sunday
+WEEK_DATASET_START_YEAR = 2024
+WEEK_DATASET_START_MONTH = 12
+WEEK_DATASET_START_DAY = 29
 
 # Logging
 LOGGING_CONFIG = {
