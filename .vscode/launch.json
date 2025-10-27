@@ -1,0 +1,11 @@
+{
+	"configurations": [
+		{
+			"name": "Python Debugger: Main File",
+			"type": "debugpy",
+			"request": "launch",
+			"program": "app.py",
+			"console": "integratedTerminal"
+		}
+	]
+}
