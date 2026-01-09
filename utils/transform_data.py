@@ -27,7 +27,7 @@ def transform_data(dataset, data_list, employee, project):
         # Remove unnecessary columns
         # TODO(developer): make this dynamic!!
         data = delete_columns(
-            data_list, [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 21, 26, 31, 36, 41, 46, 51, 56, 61, 66, 71]
+            data_list, [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 22, 27, 32, 37, 42, 47, 52, 57, 62, 67, 72]
         )
 
         # Clean data: Replace first 9 elements of the second row with the first row
@@ -35,11 +35,11 @@ def transform_data(dataset, data_list, employee, project):
 
         # Define work types
         # TODO(developer): change "['直接'] * 20" to "['直接'] * 40" for year 2025
-        work_data = ["日付"] * 3 + ["間接"] * 8 + ["直接"] * 40
+        work_data = ["日付"] * 3 + ["間接"] * 9 + ["直接"] * 40
 
         # Clean project codes: Propagate project codes across relevant columns
         for i in range(3):
-            for j in [12, 16, 20, 24, 28, 32, 36, 40, 44, 48]:
+            for j in [13, 17, 21, 25, 29, 33, 37, 41, 45, 49]:
                 data[0][i + j] = data[0][j - 1]
 
         # Structure data: Extract and organize data into a lists of lists

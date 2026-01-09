@@ -13,7 +13,7 @@ load_dotenv()
 
 def export(data, sheet_name):
 
-    save_directory = f"{os.getenv('OUTPUT_DIRECTORY')}"
+    save_directory = f"{os.getenv('OUTPUT_DIRECTORY_2026')}"
     file_path = path.join(save_directory, "TimeCollect.xlsx")
 
     os.makedirs(save_directory, exist_ok=True)

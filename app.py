@@ -28,25 +28,35 @@ def main():
     """function that will connect to Google Sheet API"""
     creds = sheet_service()
     # change this every year
-    datasets = set_types(2024, 12, 29)
+    datasets = set_types(2025, 12, 28)
 
     if creds:
         logging.info("🌐 Connected to Google API.")
 
         project_data = get_data(
-            creds, os.getenv("PROJECT_SPREADSHEET"), os.getenv("PROJECT_RANGE")
+            creds, os.getenv("PROJECT_SPREADSHEET_2026"), os.getenv("PROJECT_RANGE")
         )
         logging.info("📝 Timesheet collection started...")
 
-        sheet_names = ["202511", 
-                       "202512"
+        sheet_names = ["202601", 
+                       "202602",
+                       "202603",
+                       "202604",
+                       "202605",
+                       "202606",
+                       "202607",
+                       "202608",
+                       "202609",
+                       "202610",
+                       "202611",
+                       "202612",
                        ]
 
         for sheet_name in sheet_names:
             employees = []
             excel_sheet = []
             employee_data = get_data(
-                creds, os.getenv("EMPLOYEES_SPREADSHEET_2025"), f"{sheet_name}!A:E"
+                creds, os.getenv("EMPLOYEES_SPREADSHEET_2026"), f"{sheet_name}!A:E"
             )
             if not employee_data:
                 logging.error("No employee data collected.")
@@ -64,7 +74,7 @@ def main():
             logging.info(f"Collecting timesheet [{sheet_name}] data")
 
             for employee in employees:
-                data = get_data(creds, employee.spreadsheet_id, f"{sheet_name}!A7:BT39")
+                data = get_data(creds, employee.spreadsheet_id, f"{sheet_name}!A7:BU39")
                 transformed_data = transform_data(
                     datasets, data, employee, project_data
                 )
