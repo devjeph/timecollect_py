@@ -27,27 +27,35 @@ logging.basicConfig(
 def main():
     """function that will connect to Google Sheet API"""
     creds = sheet_service()
-    # change this every year
-    datasets = set_types(2025, 12, 28)
+
+    # Dynamically pull the start date for the timesheet year from .env
+    start_year = int(os.getenv("TIMESHEET_START_YEAR", 2025))
+    start_month = int(os.getenv("TIMESHEET_START_MONTH", 12))
+    start_day = int(os.getenv("TIMESHEET_START_DAY", 28))
+
+    datasets = set_types(start_year, start_month, start_day)
 
     if creds:
         logging.info("🌐 Connected to Google API.")
 
         project_data = get_data(
-            creds, os.getenv("PROJECT_SPREADSHEET_2026"), os.getenv("PROJECT_RANGE")
+            creds, 
+            os.getenv("PROJECT_SPREADSHEET_2026"), 
+            os.getenv("PROJECT_RANGE")
         )
         logging.info("📝 Timesheet collection started...")
 
-        sheet_names = [ 
-                        "202608", 
-                        "202609"
-                       ]
+        # Safe parsing of sheet names with fallback and whitespace stripping
+        raw_sheets = os.getenv("SHEET_NAMES","")
+        sheet_names = [s.strip() for s in raw_sheets.split(",") if s.strip()]
 
         for sheet_name in sheet_names:
             employees = []
             excel_sheet = []
             employee_data = get_data(
-                creds, os.getenv("EMPLOYEES_SPREADSHEET_2026"), f"{sheet_name}!A:E"
+                creds, 
+                os.getenv("EMPLOYEES_SPREADSHEET_2026"), 
+                f"{sheet_name}!A:E"
             )
             if not employee_data:
                 logging.error("No employee data collected.")
