@@ -40,7 +40,7 @@ def main():
 
         project_data = get_data(
             creds, 
-            os.getenv("PROJECT_SPREADSHEET_2026"), 
+            os.getenv("PROJECT_SPREADSHEET"), 
             os.getenv("PROJECT_RANGE")
         )
         logging.info("📝 Timesheet collection started...")
@@ -54,7 +54,7 @@ def main():
             excel_sheet = []
             employee_data = get_data(
                 creds, 
-                os.getenv("EMPLOYEES_SPREADSHEET_2026"), 
+                os.getenv("EMPLOYEES_SPREADSHEET"), 
                 f"{sheet_name}!A:E"
             )
             if not employee_data:
