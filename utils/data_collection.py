@@ -10,6 +10,7 @@ environment variables for the spreadsheet ID and range.
 
 import logging
 import os
+import time
 
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
@@ -21,7 +22,7 @@ from api_services.google_api import sheet_service
 load_dotenv()
 
 
-def get_data(creds, spreadsheet_id, range_name):
+def get_data(creds, spreadsheet_id, range_name, delay=0.5):
     """
     Retrieves data from Google Sheets and replaces blank values with "0.00".
 
@@ -35,6 +36,10 @@ def get_data(creds, spreadsheet_id, range_name):
         or an empty list if an error occurs.
     """
     try:
+        # Optional pacing delay to mitigate rate-limiting flags
+        if delay > 0:
+            time.sleep(delay)
+        
         service = build("sheets", "v4", credentials=creds, cache_discovery=False)
 
         # Call the Sheets API
