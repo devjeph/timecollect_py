@@ -90,14 +90,14 @@ def main():
 
             for employee in employee_data:
                 if employee:
-                    object = Employee(
+                    employee_object = Employee(
                         int(employee[0]),
                         employee[1],
                         employee[2],
                         employee[4],
                         employee[3],
                     )
-                    employees.append(object)
+                    employees.append(employee_object)
 
             logging.info(f"Collecting timesheet [{sheet_name}] data")
 
