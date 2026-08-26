@@ -1,65 +1,63 @@
 # utils/data_collection.py
-
-"""
-Retrieves data from a Google Sheet specified by spreadsheetId. 
-Blank cells in the sheet are replaced with "0.00".
-
-This script requires Google API credentials to be set up and 
-environment variables for the spreadsheet ID and range. 
-"""
-
 import logging
 import os
 import time
-
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
+from dotenv import load_dotenv
 
-from dotenv import load_dotenv  # Moved import to the top
 from api_services.google_api import sheet_service
 
-# Load environment variables
 load_dotenv()
 
-
-def get_data(creds, spreadsheet_id, range_name, delay=0.5):
+def get_data(creds, spreadsheet_id, range_name, delay=0.5, max_retries=3):
     """
-    Retrieves data from Google Sheets and replaces blank values with "0.00".
-
-    Args:
-        creds: Google API credentials object.
-        spreadsheet_id: The ID of the Google Sheet.
-        range_name: The range of cells to retrieve data from (e.g., "Sheet1!A1:B10").
-
-    Returns:
-        A list of lists representing the data from the sheet,
-        or an empty list if an error occurs.
+    Retrieves data from Google Sheets, replaces blank values with "0.00",
+    and implements an exponential backoff retry strategy for 503/429 errors.
     """
-    try:
-        # Optional pacing delay to mitigate rate-limiting flags
-        if delay > 0:
-            time.sleep(delay)
+    # Optional pacing delay to mitigate rate-limiting flags during high-volume batch processing
+    if delay > 0:
+        time.sleep(delay)
         
+    try:
         service = build("sheets", "v4", credentials=creds, cache_discovery=False)
-
-        # Call the Sheets API
         sheet = service.spreadsheets()
-        result = (
-            sheet.values().get(spreadsheetId=spreadsheet_id, range=range_name).execute()
-        )
-        values = result.get("values", [])
-
-        # Replace blank values with "0.00"
-        for i, row in enumerate(values):
-            for j, value in enumerate(row):
-                if not value:  # Check if the cell value is empty
-                    values[i][j] = "0.00"
-        return values
-
-    except HttpError as error:
-        logging.error("An error occurred: %s", error)
+    except Exception as e:
+        logging.error("Failed to build Google Sheets service: %s", e)
         return []
 
+    for n in range(max_retries):
+        try:
+            request = sheet.values().get(spreadsheetId=spreadsheet_id, range=range_name)
+            result = request.execute()
+            
+            values = result.get("values", [])
+            
+            # Replace blank values with "0.00"
+            for i, row in enumerate(values):
+                for j, value in enumerate(row):
+                    if not value:  # Check if the cell value is empty
+                        values[i][j] = "0.00"
+                        
+            return values
+            
+        except HttpError as error:
+            status_code = error.resp.status
+            # Trap 429 (Too Many Requests) and 5xx (Server-side Errors including 503)
+            if status_code == 429 or status_code >= 500:
+                wait_time = (2 ** n) + 1  # Exponential backoff: 2s, 3s, 5s...
+                logging.warning(
+                    f"API Error {status_code} for range {range_name}. "
+                    f"Retrying in {wait_time} seconds (Attempt {n + 1} of {max_retries})..."
+                )
+                time.sleep(wait_time)
+            else:
+                # Immediate fail for client errors (e.g., 400 Bad Request, 404 Not Found)
+                logging.error("An error occurred: %s", error)
+                return []
+                
+    logging.error(f"Max retries ({max_retries}) exceeded for range {range_name}.")
+    return []
 
 if __name__ == "__main__":
     creds = sheet_service()
