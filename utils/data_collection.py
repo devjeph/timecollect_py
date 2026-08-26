@@ -10,7 +10,7 @@ from api_services.google_api import sheet_service
 
 load_dotenv()
 
-def get_data(creds, spreadsheet_id, range_name, delay=0.5, max_retries=3):
+def get_data(credentials, spreadsheet_id, range_name, delay=0.5, max_retries=3):
     """
     Retrieves data from Google Sheets, replaces blank values with "0.00",
     and implements an exponential backoff retry strategy for 503/429 errors.
@@ -20,7 +20,7 @@ def get_data(creds, spreadsheet_id, range_name, delay=0.5, max_retries=3):
         time.sleep(delay)
         
     try:
-        service = build("sheets", "v4", credentials=creds, cache_discovery=False)
+        service = build("sheets", "v4", credentials=credentials, cache_discovery=False)
         sheet = service.spreadsheets()
     except Exception as e:
         logging.error("Failed to build Google Sheets service: %s", e)

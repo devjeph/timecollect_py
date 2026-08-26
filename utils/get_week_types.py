@@ -17,12 +17,12 @@ def get_name(datasets, year, month, day):
     """
     Determines the "Week Type" for a given date based on a list of date ranges.
 
-    Args:
+    Args: 
       datasets: A list of dictionaries, where each dictionary has keys
                 "Start Date", "End Date", and "Week Type".
-      _year: The year of the target date.
-      _month: The month of the target date.
-      _day: The day of the target date.
+      year: The year of the target date.
+      month: The month of the target date.
+      day: The day of the target date.
 
     Returns:
       The "Week Type" string corresponding to the target date, or the

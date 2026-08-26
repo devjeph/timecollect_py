@@ -1,23 +1,23 @@
 # utils/clean_data.py
 
 
-def delete_columns(data, column_indeces):
+def delete_columns(raw_2d_data, column_indexes):
     """
     Deletes specified columns from a 2D list.
 
     Args:
-        data (list of lists): The 2D list to remove columns from.
-        column_indeces (list of int): A list of column indices to delete.
+        raw_2d_data (list of lists): The 2D list to remove columns from.
+        column_indexes (list of int): A list of column indices to delete.
 
     Returns:
         list of lists: A new 2D list with the specified columns removed.
     """
     result = []
 
-    for row in data:
+    for row in raw_2d_data:
         new_row = []
         for i, value in enumerate(row):
-            if i not in column_indeces:
+            if i not in column_indexes:
                 new_row.append(value)
         result.append(new_row)
 

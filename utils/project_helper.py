@@ -31,7 +31,7 @@ def get_client(project_code, project_data):
 
     Args:
         project_code (str): The code of the project to search for.
-        project_datasets (list): A list of project dictionary
+        project_data (list): A list of project dictionary
 
     Returns:
         str: The client of the project if found, otherwise None.
