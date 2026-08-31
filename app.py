@@ -133,7 +133,7 @@ def main():
                             val_float = float(val_str) if val_str and val_str != "0.00" else 0.0
                             if val_float < 8.0:
                                 logging.warning(
-                                    f"FLAG [{sheet_name}] - Employee: {employee.nickname} | "
+                                    f"ALERT [{sheet_name}] - Employee: {employee.nickname} | "
                                     f"Date: {row_date} | Column M value ({val_float}) < 8.0 on a regular workday."
                                 )
                         except ValueError:
@@ -147,7 +147,7 @@ def main():
                 excel_sheet += transformed_data
                 
                 logging.info(
-                    f"[{sheet_name}]-[ {'*' * (15-len(employee.nickname))} {employee.nickname} ] ✅ OK."
+                    f"[{sheet_name}]-[ {'*' * (15-len(employee.nickname))} {employee.nickname} ] ✅ Data Processed."
                 )
 
             export(excel_sheet, sheet_name)
